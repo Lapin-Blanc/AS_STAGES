@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+        <head>
+            <title>Vue par mois</title>
+        <link rel='stylesheet' href={% static 'fullcalendar/fullcalendar.css' %} />
+        <script src={% static 'lib/jquery.min.js' %}></script>
+        <script src={% static 'lib/moment.min.js' %}></script>
+        <script src={% static 'fullcalendar/fullcalendar.js' %}></script>
+        <script src={% static 'fullcalendar/fr.js' %}></script>
+
+        <script>
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                timezone : "local",
+                defaultView : "listMonth",
+                nowIndicator : true,
+                slotLabelFormat: 'HH:mm',
+                header : {
+                    left:   '',
+                    center: 'title',
+                    right:  ''
+                },
+                eventSources : [
+                    {
+                        url: '/cal/read/{{ original.id }}/?type=past',
+                        backgroundColor: 'LightGrey',
+                        textColor: 'RoyalBlue',
+                    },
+                    {
+                        url: '/cal/read/{{ original.id }}/?type=future',
+                    }
+                 ],
+
+            });
+        });
+        </script>
+        </head>
+        <body>
+            <h2 style="text-align:center;">{{ original.student.first_name }} {{ original.student.last_name }} - stage d'{{ original.category }}</h2>
+            <h4 style="text-align:center;"><i>{{ original.place }}</i></h4>
+            <div id="calendar"></div>
+        </body>
+</html>

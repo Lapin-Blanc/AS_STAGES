@@ -1,0 +1,107 @@
+{% extends 'admin/change_form.html' %}
+{% load static %}
+{% block content %}
+    {{ block.super }}
+{% if original %}
+        <link rel='stylesheet' href={% static 'fullcalendar/fullcalendar.css' %} />
+        <script src={% static 'lib/jquery.min.js' %}></script>
+        <script src={% static 'lib/moment.min.js' %}></script>
+        <script src={% static 'fullcalendar/fullcalendar.js' %}></script>
+        <script src={% static 'fullcalendar/fr.js' %}></script>
+
+        <script>
+        function suppress_event(event_id) {
+            var strconfirm = confirm("Êtes-vous sûr de vouloir supprimer cette plage horaire ?");
+            if (strconfirm == true) {
+                $.ajax({
+                    url: '/cal/delete/{{ original.id }}/',
+                    data: 'event_id='+event_id,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#calendar').fullCalendar('removeEvents', event_id);
+                    },
+                    error: function(response) {
+                        alert(response.responseJSON.errors[0].detail);
+                        revertFunc();
+                    },
+                });
+            }
+        };
+
+        function update_event(event, delta, revertFunc) {
+            $.ajax({
+                url: '/cal/update/{{ original.id }}/',
+                data: 'event_id=' + event.id + '&start=' + event.start.toISOString()+'&end='+event.end.toISOString(),
+                type: 'GET',
+                dataType: 'json',
+                error: function(response) {
+                    alert(response.responseJSON.errors[0].detail);
+                    revertFunc();
+                },
+            });
+        };
+        
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                timezone : "local",
+                defaultView : "agendaWeek",
+                nowIndicator : true,
+                scrollTime: '08:00:00',
+                allDaySlot: false,
+                slotLabelFormat: 'HH:mm',
+                slotDuration : '00:15:00',
+                editable : true,
+//                eventOverlap : false,
+//                selectOverlap : false,
+                selectable : true,
+                selectHelper : true,
+                eventSources : [
+                    {
+                        url: '/cal/read/{{ original.id }}/?type=past',
+                        {% if request.user.student %}
+                        backgroundColor: 'LightGrey',
+                        textColor: 'RoyalBlue',
+                        editable: false,
+                        {% endif %}
+                    },
+                    {
+                        url: '/cal/read/{{ original.id }}/?type=future',
+                    }
+                 ],
+
+                select: function(start, end) {
+                    $.ajax({
+                        url: '/cal/create/{{ original.id }}/',
+                        data: 'start='+start.toISOString()+'&end='+end.toISOString(),
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(response) {
+                            eventData = {
+                            start: start,
+                            end: end,
+                            id: response.event_id,
+                            };
+                        $('#calendar').fullCalendar('renderEvent', eventData, false); 
+                        },
+                        error: function(response) {
+                            alert(response.responseJSON.errors[0].detail);
+                        },
+
+                    });
+                    $('#calendar').fullCalendar('unselect');
+                },
+                
+                eventRender: function(event, element, view ) {
+                    element.find('.fc-time').append('<img onclick="suppress_event('+event.id+')" src={% static 'img/trashbin.png' %} style="float:right"></img>');
+                },
+
+                eventResize : update_event,
+                eventDrop: update_event,
+            });
+            //$('#calendar').fullCalendar('next');
+        });
+        </script>
+{% endif %}
+    <div id="calendar"></div>
+{% endblock %}

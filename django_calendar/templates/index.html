@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Accueil calendrier</title>
+        <meta charset="UTF-8">
+        
+        <link rel='stylesheet' href={% static 'fullcalendar/fullcalendar.css' %} />
+        <script src={% static 'lib/jquery.min.js' %}></script>
+        <script src={% static 'lib/moment.min.js' %}></script>
+        <script src={% static 'fullcalendar/fullcalendar.js' %}></script>
+        <script src={% static 'fullcalendar/fr.js' %}></script>
+
+        <script>
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                timezone : "local",
+                defaultView : "agendaWeek",
+                nowIndicator : true,
+                editable : true,
+                selectable : true,
+                selectHelper : true,
+                eventSources : [
+                    {
+                        url: 'feed',
+                        color: 'yellow',
+                        textColor: 'black'
+                    }
+                ]
+            });
+        });
+        </script>
+
+    </head>
+
+<!-- ---------------------------------------- -->
+    <body>        
+        <h1>Accueil calendrier</h1>
+        <div id="calendar"></div>
+    </body>
+</html>

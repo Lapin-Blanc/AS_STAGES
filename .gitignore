@@ -2,6 +2,9 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.sqlite3
+*/migrations/00*.py
+*.json
 
 # C extensions
 *.so
