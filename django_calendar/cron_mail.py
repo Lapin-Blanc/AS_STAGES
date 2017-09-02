@@ -1,7 +1,7 @@
-import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "AS_STAGES.settings")
-import django
-django.setup()
+#import os
+#os.environ.setdefault("DJANGO_SETTINGS_MODULE", "AS_STAGES.settings")
+#import django
+#django.setup()
 
 from io import BytesIO
 
