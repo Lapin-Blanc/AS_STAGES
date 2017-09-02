@@ -5,7 +5,8 @@ __pycache__/
 *.sqlite3
 */migrations/00*.py
 *.json
-private_settings.py
+/static/
+!/static/readme
 
 # C extensions
 *.so

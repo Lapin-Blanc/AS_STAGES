@@ -26,12 +26,13 @@ SECRET_KEY = '1nc*zo=86gp%%kktboc+(a)8r21cizpt)k^#blr&xy+8tr&=6a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost', 'kimsufi2.lapin-blanc.com']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django_crontab',
     'django_calendar',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -121,3 +122,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static/'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'user'
+EMAIL_HOST_PASSWORD = 'password'
+
+CRONJOBS = [
+    ('*/1 * * * *', 'django_calendar.cron_mail.send_all_schedules') # every minute for testing
+]
