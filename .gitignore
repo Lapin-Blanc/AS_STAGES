@@ -5,6 +5,7 @@ __pycache__/
 *.sqlite3
 */migrations/00*.py
 *.json
+/AS_STAGES/settings.py
 /static/
 !/static/readme
 

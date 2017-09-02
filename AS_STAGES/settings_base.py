@@ -26,7 +26,7 @@ SECRET_KEY = '1nc*zo=86gp%%kktboc+(a)8r21cizpt)k^#blr&xy+8tr&=6a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'kimsufi2.lapin-blanc.com']
+ALLOWED_HOSTS = ['localhost',]
 
 
 # Application definition
