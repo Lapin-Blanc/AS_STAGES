@@ -56,7 +56,7 @@ ROOT_URLCONF = 'AS_STAGES.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'AS_STAGES/templates],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -21,3 +21,7 @@ urlpatterns = [
     url(r'^cal/', include("django_calendar.urls")),
     url(r'^', admin.site.urls),
 ]
+
+admin.site.site_header = 'Administration EICA'
+admin.site.site_title = "École Industrielle et Commerciale d'Auvelais"
+

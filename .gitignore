@@ -6,8 +6,9 @@ __pycache__/
 */migrations/00*.py
 *.json
 /AS_STAGES/settings.py
+!static/readme
+!static/favicon.ico
 /static/
-!/static/readme
 
 # C extensions
 *.so
