@@ -131,3 +131,10 @@ EMAIL_HOST_PASSWORD = 'password'
 CRONJOBS = [
     ('*/1 * * * *', 'django_calendar.cron_mail.send_all_schedules') # every minute for testing
 ]
+
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+# SECURE_BROWSER_XSS_FILTER = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# X_FRAME_OPTIONS = 'DENY'
+
