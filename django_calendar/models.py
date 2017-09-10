@@ -79,6 +79,14 @@ class Traineeship(models.Model):
                 code = 'invalid',
                 params = {'date_start':self.date_start, 'date_end':self.date_end}
             )
+        # we check if there is no other traineeship still open
+        if not self.is_closed and Traineeship.objects.filter(student=self.student, is_closed=False):
+            raise ValidationError(
+                "Il existe déjà un stage d'ouvert pour cet étudiant : %(ts)s",
+                code = 'invalid',
+                params = {'ts':Traineeship.objects.get(student=self.student, is_closed=False)}
+            )
+ 
 
     def save(self, *args, **kwargs):
         self.clean()
