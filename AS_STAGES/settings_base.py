@@ -143,3 +143,9 @@ CRONJOBS = [
 # SECURE_HSTS_PRELOAD = True
 
 
+# Settings for AS_STAGES
+# for schedules mailing
+PERMANENT_RECIPIENTS = ['admin@example.com',]
+AS_SENDER = 'no-reply@example.com'
+
+
