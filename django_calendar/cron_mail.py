@@ -28,7 +28,7 @@ def send_all_schedules(from_date=timezone.localdate()):
     
     for supervisor in Supervisor.objects.all():
         
-        recipients = settings.PERMANENT_RECIPIENTS + [supervisor.email]
+        recipients = [supervisor.email] + settings.PERMANENT_RECIPIENTS
         subject = base_subject + " pour %s" % (supervisor)
         body = "Superviseur : %s\n" % (supervisor,)
         msg = EmailMessage(subject, body, sender, recipients)
